@@ -42,13 +42,16 @@
 %\makeatother
 
 % Self defined commands
-\newcommand{\degC}{$^{\circ}$C\xspace}
+\newcommand{\degreesC}{\textdegree C\xspace}
+\newcommand{\degrees}{\textdegree\xspace}
 \newcommand{\dC}{$\delta^{13}$C\xspace}
 \newcommand{\dO}{$\delta^{18}$O\xspace}
 \newcommand{\SrSr}{$^{87}$Sr/$^{86}$Sr\xspace}
 \newcommand{\permil}{\textperthousand\xspace}
 \newcommand{\dsil}{$d$\xspace}
 \newcommand{\UPb}{$^{206}$Pb/$^{238}$U\xspace}
+\newcommand{\pCOtwo}{\textit{p}CO$_{2}$\xspace}
+\newcommand{\COtwo}{CO$_{2}$\xspace}
 %
 
 \pagestyle{myheadings}
@@ -63,7 +66,9 @@
 {\Large \textbf{GEOCLIM Modern}}
 
 Yuem Park\textsuperscript{1},
-Nicholas L. Swanson-Hysell\textsuperscript{1}
+Nicholas L. Swanson-Hysell\textsuperscript{1},
+Pierre Maffre\textsuperscript{2},
+Yves Godd\'eris\textsuperscript{2}
 
 \bigskip
 \textsuperscript{1} Department of Earth and Planetary Science, University of California, Berkeley, CA, USA
@@ -83,11 +88,28 @@ XXX
 
 \section*{INTRODUCTION \label{sec:INTRODUCTION}}
 
-XXX
+Over geologic time-scales, \COtwo enters Earth's ocean/atmosphere system primarily via volcanism and metamorphic degassing of the solid Earth, and leaves it primarily through the chemical weathering of silicate rocks, which delivers alkalinity and cations to the ocean that ultimately result in the consumption of carbon via the precipitation of carbonate rocks \citep{Kump2000a}. Imbalances between the magnitude of these source and sink fluxes will cause \pCOtwo to change until the silicate weathering negative feedback (in which elevated \pCOtwo leads to higher temperatures and a more intense hydrological cycle that enhances chemical weathering of silicate rocks and therefore the consumption of \COtwo, and vice versa) stabilizes \pCOtwo at a new steady state value \citep{Walker1981a}. One way to perturb steady state \pCOtwo is to change global weatherability - the sum of factors other than climate that contribute to the chemical weathering of rocks and associated \COtwo consumption, such as lithology \citep{Gaillardet1999a, Dessert2003a}, topography \citep{Maher2014a, Maffre2018a}, and paleolatitude \citep{Swanson-Hysell2017a}. \COtwo input from the solid Earth, assuming that it remains constant, can be removed via silicate weathering at a lower \pCOtwo on a planet with relatively high weatherability than on a planet where it is lower \citep{Kump1997a}.
+
+Mafic rocks have a higher weatherability than felsic rocks because of both the higher concentrations of Ca and Mg (that ultimately sequester carbon through precipitation as carbonate) in mafic lithologies, as well as their faster weathering rates in identical conditions \citep{Dessert2001a, Dessert2003a}. Soil shielding is another important factor that affects weatherability - in low-relief regions, regolith tends to be thicker, which can lead to a supply-limited weathering regime in which the weathering rate of the underlying bedrock is dependent only on the uplift rate \citep{Gabet2009a, Maher2014a}. In this framework, processes that lead to continued exhumation of mafic lithologies and the creation of steep topography that minimizes soil shielding, particularly in tropical regions where temperature and runoff is high, should exert a strong control on global weatherability and long-term climate. Recent work has suggested that arc-continent collisions in the tropics during the Ordovician \citep{Swanson-Hysell2017a}, the Cenozoic \citep{Jagoutz2016a}, and even the Neoproterozoic \citep{Park2018a} played an important role in initiating glacial climate states at those times. Furthermore, a comparison between the paleolatitudinal position of all major Phanerozoic arc-continent collisions and the latitudinal extent of continental ice sheets reveals a strong correlation between the extent of glaciation and arc-continent collisions in the tropics \citep{Macdonald2019a}. On the other hand, \citet{Park2019a} found no correlation between the extent of glaciation and large igneous province area in the tropics, which was explained by the fact that large igneous provinces, although mafic, are often emplaced into low relief areas where soil shielding is relatively high.
+
+However, quantifying the increase in global weatherability associated with these tropical arc-continent collisions or large igneous province emplacements and the consequent decrease in steady state \pCOtwo is challenging for the past, primarily due to the large uncertainties on the global context within which these events took place. For instance, in order to even begin to model global weathering fluxes and \pCOtwo, one would need to have constraints on the paleogeographic distribution of land masses, the spatial distribution of temperature, runoff, topography, and lithology on these land masses, and the carbon input flux coming from the degassing of the solid Earth at the time of these events. While the paleogeographic distribution of the continents is broadly well-constrained for recent Earth history (e.g. \citealp{Torsvik2016a}) and temperature and runoff can be estimated using a global climate model, constraints on the other parameters are poor, particularly as we go deeper into Earth's history.
+
+However, the growth of the Malay Archipelago (the islands of Indonesia and surrounding regions, Fig. X) as Australia migrates northward represents an episode of arc-continent collision occurring in the tropics today. Given that the global context within which this event is occurring is well-constrained, the growth of the Malay Archipelago presents an opportunity to quantify the increase in global weatherability and consequent decrease in steady state \pCOtwo associated with it, and evaluate the feasibility of similar tropical arc-continent collisions initiating glacial climate states throughout Earth's history \citep{Macdonald2019a}.
 
 \section*{METHODS}
 
-XXX
+To estimate the decrease in steady state \pCOtwo associated with the increase in global weatherability from the growth of the Malay Archipelago, we use the spatially resolved GEOCLIM Earth system model. At its core, GEOCLIM calculates \COtwo consumption by silicate weathering for each continental grid cell to obtain steady state \pCOtwo. In previous versions of the model, the silicate weathering rate for each continental grid cell was a function of temperature, runoff, and a calibration constant only (e.g. \citealp{Godderis2014a}). However, more recent versions of the model implement a dependence on...
+
+\begin{itemize}
+    \item GEOCLIM and GFDL models
+    \item added lithology (GLiM)
+    \item calibration
+    \item tested scenarios
+\end{itemize}
+
+The global lithological map database GLiM of Hartmann and Moosdorf was used to develop a
+
+The lithological categories of the global lithological map database GLiM of \cite{Hartmann2012a} were used and grouped into 6 categories: metamorphic, felsic, intermediate, mafic, carbonate, and siliciclastic. These values were assigned at the 0.5\textdegree resolution and were then downsampled using a mode downsampling scheme to 1\textdegree resolution
 
 \section*{RESULTS}
 
@@ -123,5 +145,15 @@ XXX
 
 \bibliographystyle{gsabull}
 \bibliography{References}
+
+\section{Supplemental Materials}
+Experimental determinations of the activation energy (E$_a$) associated with the weathering of silicate minerals are variable \citep{Brantley2003a}. However, multiple efforts to invert for E$_a$ in basaltic watersheds with varying temperature have yielded values (41.6$\pm$3.2 kJ/mol in \citealp{Li2016a}; 42.3 kJ/mol in \citealp{Dessert2001a}) that are consistent with the lower end of activation energies of Ca+Mg bearing minerals in laboratory experiments such as that for diopside (41.8 kJ/mol; \citealp{Knauss1993a}) and for labradorite (42 kJ/mol; \citealp{Carroll2005a}. We use the values of 42 kJ/mol in our model runs.
+
+%note that these values are for 25ºC To
+
+% http://dx.doi.org/10.1016/B0-08-043751-6/05075-1 Brantley2003a
+% https://doi.org/10.1016/0016-7037(93)90431-U Knauss1993a
+% http://dx.doi.org/10.1016/j.chemgeo.2004.12.008 Carroll2005a
+
 
 \end{document}
