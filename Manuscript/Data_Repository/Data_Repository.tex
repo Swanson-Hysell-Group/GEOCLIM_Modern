@@ -1,0 +1,100 @@
+\documentclass[11pt,letterpaper]{article}
+
+%\usepackage{fontspec}
+%\usepackage[utf8]{inputenc}
+\usepackage{textcomp,marvosym}
+\usepackage{amsmath,amssymb}
+\usepackage[normalem]{ulem}
+\usepackage[left]{lineno}
+\usepackage{changepage}
+\usepackage{rotating}
+\usepackage{color}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{threeparttable}
+\usepackage{color,colortbl}
+\usepackage{url}
+%\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+\doublespacing
+
+\raggedright
+\textwidth = 6.5 in
+\textheight = 8.25 in
+\oddsidemargin = 0.0 in
+\evensidemargin = 0.0 in
+\topmargin = 0.0 in
+\headheight = 0.0 in
+\headsep = 0.5 in
+\parskip = 0.1 in
+\parindent = 0.1in
+
+% Bold the 'Figure #' in the caption and separate it from the title/caption with a period
+% Captions will be left justified
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off]{caption}
+
+% Remove brackets from numbering in List of References
+%\makeatletter
+%\renewcommand{\@biblabel}[1]{\quad#1.}
+%\makeatother
+
+% Self defined commands
+\newcommand{\degC}{$^{\circ}$C\xspace}
+\newcommand{\dC}{$\delta^{13}$C\xspace}
+\newcommand{\dO}{$\delta^{18}$O\xspace}
+\newcommand{\SrSr}{$^{87}$Sr/$^{86}$Sr\xspace}
+\newcommand{\permil}{\textperthousand\xspace}
+\newcommand{\dsil}{$d$\xspace}
+
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{DR\arabic{figure}}
+\setcounter{table}{0}
+\renewcommand{\thetable}{DR\arabic{table}}
+
+\definecolor{Yellow}{rgb}{1,1,0.35}
+%
+
+\pagestyle{myheadings}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Park et al., in review for XXX}
+\rhead{\thepage}
+
+\begin{document}
+
+\begin{flushleft}
+{\Large \textbf{Data Repository for ``GEOCLIM Modern''}}
+\\
+Yuem Park\textsuperscript{1},
+\\
+\bigskip
+\textsuperscript{1} Department of Earth and Planetary Science, University of California, Berkeley, CA, USA
+\\
+\bigskip
+
+\end{flushleft}
+
+\linenumbers
+
+This document accompanies the discussion contained in the main text. All the Python code used for this study, as well as the associated data tables not included in this document, can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
+
+\clearpage
+
+\section*{XXX}
+
+XXX
+
+\clearpage
+
+\singlespacing
+
+\newpage
+
+\bibliographystyle{gsabull}
+\bibliography{References}
+
+\end{document}
