@@ -85,25 +85,21 @@ Yves Godd\'eris\textsuperscript{2}
 
 This document accompanies the discussion contained in the main text. All the Python code used for this study, as well as the associated data tables not included in this document, can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
 
-\section*{GEOCLIM}
+\section*{Regolith Component}
+
+The regolith component of GEOCLIM models the geochemical evolution of a rock particle as it leaves unweathered bedrock and transits through overlying regolith.
 
 \begin{equation}
     \frac{dh}{dt} = P - E
 \end{equation}
 
 \begin{equation}
-    P = P_{0}f(h)
+    \frac{\partial x}{\partial t} = -P \frac{\partial x}{\partial z} - K \tau^{\sigma}x
 \end{equation}
 
 \begin{equation}
-    \frac{dh}{dt} = P_{0}f(h) - E
+    \frac{\partial \tau}{\partial t} = -P \frac{\partial \tau}{\partial z} + 1
 \end{equation}
-
-\begin{equation}
-    \frac{\delta x}{\delta t} = P_{0}f(h) - E
-\end{equation}
-
-equation \ref{eq:test}
 
 \clearpage
 
