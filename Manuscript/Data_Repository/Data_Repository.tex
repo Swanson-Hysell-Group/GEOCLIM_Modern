@@ -85,19 +85,19 @@ Yves Godd\'eris\textsuperscript{2}
 
 This document accompanies the discussion contained in the main text. All the Python code used for this study, as well as the associated data tables not included in this document, can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
 
-\section*{Regolith Component}
+\section*{Silicate Weathering Component}
 
 \begin{figure}[h!]
 \begin{center}
 	\includegraphics[width=0.5\textwidth]{../Figures/regolith_schematic.pdf}
-	\caption{A schematic representation of the regolith component in GEOCLIM at steady state. A rock particle leaves the unweathered bedrock with production rate $P$, and transits vertically through a regolith of height $h$. As the rock particle transits through the regolith, some fraction of the weatherable phases in the rock particle ($x$) are dissolved and leaves the regolith column as weathered phases ($W$). The fraction of the weatherable phases in the rock particle that are not dissolved after transiting through the regolith column leaves it via erosion ($E$).}
+	\caption{A schematic representation of the silicate weathering in GEOCLIM at steady state. A rock particle leaves the unweathered bedrock with production rate $P$, and transits vertically through a regolith of height $h$. As the rock particle transits through the regolith, some fraction of the weatherable phases in the rock particle ($x$) are dissolved and leaves the regolith column as weathered phases ($W$). The fraction of the weatherable phases in the rock particle that are not dissolved after transiting through the regolith column leaves it via erosion ($E$).}
 	\label{fig:regolith_schematic}
 \end{center}
 \end{figure}
 
-The regolith component of GEOCLIM models the geochemical evolution of a rock particle as it leaves unweathered bedrock and transits through overlying regolith (Fig. \ref{fig:regolith_schematic}). The component is based upon the theoretical model of \citet{Gabet2009a}, in which material enters the regolith through the downward propagation of the weathering front, and leaves the regolith through physical erosion at the land surface and through the transport of dissolved phases by chemical weathering.
+The silicate weathering of GEOCLIM models the geochemical evolution of a rock particle as it leaves unweathered bedrock and transits through overlying regolith (Fig. \ref{fig:regolith_schematic}). The component is based upon the theoretical model of \citet{Gabet2009a}, in which material enters the regolith through the downward propagation of the weathering front, and leaves the regolith through physical erosion at the land surface and through the transport of dissolved phases by chemical weathering.
 
-The fundamental processes within the regolith component are described by the following system of three equations:
+The fundamental processes within the silicate weathering are described by the following system of three equations:
 
 \begin{equation}
     \frac{dh}{dt} = P - E
@@ -124,7 +124,7 @@ The net weathering rate in the regolith column ($W$, m/yr) can then be calculate
     \label{eq:4}
 \end{equation}
 
-The steady state solution of the regolith component is obtained by setting the left hand side of Equations \ref{eq:1}, \ref{eq:2} and \ref{eq:3} to zero.
+The steady state solution of the silicate weathering is obtained by setting the left hand side of Equations \ref{eq:1}, \ref{eq:2} and \ref{eq:3} to zero.
 
 \citet{Heimsath1997a} found that the rate at which material is entrained into the physically disturbed portion of the regolith (often called soil production) declines exponentially with increasing depth of this disturbed layer. The regolith model that we use does not differentiate the physically disturbed portion of the regolith, but given that the extent of weathering in the regolith below the physically disturbed layer has been found to covary with the rate of soil production \citep{Burke2007a}, we assume that regolith production behaves similarly to soil production:
 
@@ -156,7 +156,7 @@ The $K$ in the dissolution rate constant in Equation \ref{eq:2} describes the de
 \noindent
 Equation \ref{eq:8} is an empirical simplification of mineral dissolution rates derived from kinetic theory and laboratory experiments \citet{West2012a}, where $k_{d}$ is a proportionality constant that modifies the dependence of dissolution rate on runoff and temperature (yr$^{-1-\sigma}$), and $k_{w}$ is a proportionality constant that modified the dependence of dissolution rate on runoff only (yr/m).
 
-Finally, the erosion rate in the regolith component of GEOCLIM uses the parameterization of \citet{Maffre2018a}, which combines the small-scale incision model of \citet{Davy2000a} with the large-scale BQART model of \citet{Syvitski2007a}:
+Finally, the erosion rate in the silicate weathering of GEOCLIM uses the parameterization of \citet{Maffre2018a}, which combines the small-scale incision model of \citet{Davy2000a} with the large-scale BQART model of \citet{Syvitski2007a}:
 
 \begin{equation}
     E = k_{e}\;q^{m}\;s^{n}
@@ -171,6 +171,12 @@ $k_{e}$ is a proportionality constant ((m/yr)$^{1-m}$), $s$ is the slope (m/m), 
 XXX
 
 Experimental determinations of the activation energy (E$_a$) associated with the weathering of silicate minerals are variable \citep{Brantley2003a}. However, multiple efforts to invert for E$_a$ in basaltic watersheds with varying temperature have yielded values (41.6$\pm$3.2 kJ/mol in \citealp{Li2016a}; 42.3 kJ/mol in \citealp{Dessert2001a}) that are consistent with the lower end of activation energies of Ca+Mg bearing minerals in laboratory experiments such as that for diopside (40.5$\pm$1.7 kJ/mol; \citealp{Knauss1993a}) and for labradorite (42.1 kJ/mol; \citealp{Carroll2005a}. We use the values of 42 kJ/mol in our model runs.
+
+\section*{Lithology Implementation}
+
+XXX
+
+going from GLiM to our lithologic classes.
 
 \clearpage
 
