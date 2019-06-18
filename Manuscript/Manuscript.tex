@@ -68,7 +68,7 @@
 Yuem Park\textsuperscript{1},
 Nicholas L. Swanson-Hysell\textsuperscript{1},
 Pierre Maffre\textsuperscript{2},
-Francis Macdonald\textsuperscript{3},
+Francis A. Macdonald\textsuperscript{3},
 Yves Godd\'eris\textsuperscript{2}
 
 \bigskip
@@ -105,13 +105,25 @@ However, the growth of the Malay Archipelago (the islands of Indonesia and surro
 
 \section*{METHODS}
 
-To estimate the decrease in steady state \pCOtwo associated with the increase in global weatherability from the growth of the Malay Archipelago, we use the spatially resolved GEOCLIM Earth system model. At its core, GEOCLIM calculates \COtwo consumption by silicate weathering for each continental grid cell to obtain steady state \pCOtwo. In previous versions of the model, the silicate weathering rate for each continental grid cell was a function of temperature, runoff, and a calibration constant only (e.g. \citealp{Godderis2014a}). However, more recent versions of the model implement a dependence on...
+To estimate the decrease in steady state \pCOtwo associated with the increase in global weatherability from the growth of the Malay Archipelago, we use the spatially resolved GEOCLIM Earth system model \citep{Godderis2014a, Godderis2017c}, which iteratively couples box models of surface biogeochemical cycles to climate model output. Estimates of fluxes of species between carbon, alkalinity, phosphorous, and oxygen reservoirs in the ocean and atmosphere are used to calculate \pCOtwo, which is then compared against climate model output computed at various \pCOtwo levels to estimate temperature and runoff at the current \pCOtwo in GEOCLIM. These new temperature and runoff fields are then fed back into the biogeochemical box models to update \pCOtwo, for which new temperature and runoff fields are again estimated. This iteration is continued until a steady state is achieved in all reservoirs.
+
+In this study, we use temperature and runoff fields from a subset of the GFDL CM2.0 experiments \citep{Delworth2006a, Delworth2006b} for the climate model component of GEOCLIM. These experiments were performed in order to explore the effect of various changes in forcing agents on climate since ca. 1860 at a 1\degrees $\times$ 1\degrees resolution. In the `1860 control' experiment, forcing agents representative of conditions ca. 1860 (including \COtwo, CH$_{4}$, N$_{2}$O, O$_{3}$, sulfates, carbon, dust, sea salt, solar irradiance, and the distribution of land cover types) are held constant for 500 years after reaching equilibrium. \pCOtwo in 1860 is assumed to be 286~ppm. In the `+1\%/yr to 2$\times$' experiment, initial conditions are taken from the `1860 control' experiment, then \pCOtwo is prescribed to increase from 286~ppm at a compounded rate of +1\% per year for 70 years, when \pCOtwo reaches double (572~ppm) of the initial value. \pCOtwo is then held constant until the end of the 280 year experiment. All non-\COtwo forcing agents are held constant. The `+1\%/yr to 4$\times$' experiment is identical to the `+1\%/yr to 2$\times$' experiment, except that \pCOtwo is prescribed to increase for 140 years, when \pCOtwo reaches quadruple (1144~ppm) of the initial value. We take the mean of the last 100 years of each of these three experiments (when \pCOtwo is being held constant at its final level) to obtain temperature and runoff fields for 286, 572, and 1144~ppm respectively. The primary strength of using these three GFDL CM2.0 experiments is that all non-\COtwo forcing agents are held constant, allowing the effect of \pCOtwo on climate to be isolated.
+
+The silicate weathering component of GEOCLIM calculates \COtwo consumption by silicate weathering for each continental grid cell. In previous versions of the model, the silicate weathering rate was a function of temperature and runoff only, and assumed that the bedrock in all continental grid cells had identical chemical compositions (e.g. \citealp{Godderis2014a}). However, more recent versions of GEOCLIM implement regolith development and soil shielding into the silicate weathering component based on work by \citet{Heimsath1997a}, \citet{Gabet2009a}, \citet{West2012a}, \citet{Carretier2014a}, \citet{Godderis2017b}, and \citet{Maffre2018a}, which introduces an additional dependence on topographic slope (see Data Repository). While this introduction of regolith development into GEOCLIM is an important piece of assessing the impact of arc-continent collisions in the Malay Archipelago on \pCOtwo, the relatively high Ca and Mg concentration in arc rocks relative to other lithologies must also be considered. We therefore implement variable bedrock Ca+Mg concentration into the silicate weathering component of GEOCLIM. The spatial distribution of lithologies is sourced from the global lithologic map (GLiM) of \citet{Hartmann2012a}. 16 lithologic categories are represented in GLiM, which we simplify into 6 broader categories: metamorphic, felsic, intermediate, mafic, carbonate, and siliciclastic sediment (Fig. XX; see Data Repository). Each continental grid cell is then assigned one of these lithologic categories. The Ca+Mg concentrations of felsic, intermediate, and mafic grid cells are then assigned based on the mean of MgO and CaO measurements on rocks of each of these lithologic categories in the EarthChem Portal (\url{www.earthchem.org/portal}). The weathering of carbonate grid cells does not contribute to long-term \COtwo consumption and therefore its Ca+Mg concentration is ignored. The Ca+Mg concentrations of metamorphic and siliciclastic sediment grid cells are more difficult to define, since the chemical composition of any metamorphic or siliciclastic sedimentary rock is strongly dependent on the protolith.
+
+and maturity for sediments
+
+
+
+XXX
+
 
 \begin{itemize}
     \item GEOCLIM and GFDL models
     \item added lithology (GLiM)
     \item calibration
     \item tested scenarios
+    \item in discussion, talk about GFDL limitations (equilibrated by last 100 years?, not changing paleogeography, low resolution, model is quite old)
 \end{itemize}
 
 The global lithological map database GLiM of Hartmann and Moosdorf was used to develop a
@@ -142,7 +154,9 @@ XXX
 
 \section*{FIGURES}
 
-XXX
+\begin{itemize}
+    \item lithologic mask
+\end{itemize}
 
 \clearpage
 \newpage
