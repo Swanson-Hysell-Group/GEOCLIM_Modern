@@ -7,6 +7,7 @@
 \usepackage[normalem]{ulem}
 \usepackage[left]{lineno}
 \usepackage{changepage}
+\usepackage{sidecap}
 \usepackage{rotating}
 \usepackage{color}
 \usepackage{natbib}
@@ -83,19 +84,19 @@ Yves Godd\'eris\textsuperscript{2}
 
 \linenumbers
 
-This document accompanies the discussion contained in the main text. All the Python code used for this study, as well as the associated data tables not included in this document, can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
+These repository materials provide details on the model framework used tin this study. All of the Python code used for this study can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
 
 \section*{Silicate Weathering Component}
 
-\begin{figure}[h!]
+\begin{SCfigure}[0.6][h!]
 \begin{center}
-	\includegraphics[width=0.5\textwidth]{../Figures/regolith_schematic.pdf}
-	\caption{A schematic representation of the silicate weathering in GEOCLIM at steady state. A rock particle leaves the unweathered bedrock with production rate $P$, and transits vertically through a regolith of height $h$. As the rock particle transits through the regolith, some fraction of the weatherable phases in the rock particle ($x$) are dissolved and leaves the regolith column as weathered phases ($W$). The fraction of the weatherable phases in the rock particle that are not dissolved after transiting through the regolith column leaves it via erosion ($E$).}
+	\includegraphics[width=0.6\textwidth]{../Figures/regolith_schematic.pdf}
+	\caption{A schematic representation of the silicate weathering component of GEOCLIM in a single profile at steady state. A rock particle leaves the unweathered bedrock with production rate $P$, and transits vertically through a regolith of height $h$. As the particle transits upwards, some fraction of the calcium and magnesium in the particle ($x$) leaves the regolith column as solutes ($W$) due to chemical weathering. The fraction of calcium and magnesium remaining in the weatherable minerals after transiting through the regolith column leaves via physical erosion ($E$) along with other residual weathering products.}
 	\label{fig:regolith_schematic}
 \end{center}
-\end{figure}
+\end{SCfigure}
 
-The silicate weathering of GEOCLIM models the geochemical evolution of a rock particle as it leaves unweathered bedrock and transits through overlying regolith (Fig. \ref{fig:regolith_schematic}). The component is based upon the theoretical model of \citet{Gabet2009a}, in which material enters the regolith through the downward propagation of the weathering front, and leaves the regolith through physical erosion at the land surface and through the transport of dissolved phases by chemical weathering.
+The silicate weathering of GEOCLIM models the geochemical evolution of a rock particle as it leaves unweathered bedrock and transits through overlying regolith (Fig. \ref{fig:regolith_schematic}). The usage of regolith here defines it as the chemically weathered profile where the base of the regolith is the contact with unweathered bedrock. The component is based upon the theoretical model of \citet{Gabet2009a}, in which material enters the regolith through the downward propagation of the weathering front, and leaves the regolith through physical erosion at the land surface and through the transport of dissolved phases by chemical weathering.
 
 The fundamental processes within the silicate weathering are described by the following system of three equations:
 
@@ -165,6 +166,10 @@ Finally, the erosion rate in the silicate weathering of GEOCLIM uses the paramet
 
 \noindent
 $k_{e}$ is a proportionality constant ((m/yr)$^{1-m}$), $s$ is the slope (m/m), and $m$ and $n$ are adjustable exponents.
+
+XXX
+
+Add Ca+Mg concentrations
 
 \section*{Choice of Parameters}
 
