@@ -84,21 +84,19 @@ Yves Godd\'eris\textsuperscript{2}
 
 \linenumbers
 
-These repository materials provide details on the model framework used tin this study. All of the Python code used for this study can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
+These repository materials provide details on the model framework used in this study. All of the Python code used for this study can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
 
 \section*{Silicate Weathering Component}
 
 \begin{SCfigure}[0.6][h!]
 \begin{center}
 	\includegraphics[width=0.6\textwidth]{../Figures/regolith_schematic.pdf}
-	\caption{A schematic representation of the silicate weathering component of GEOCLIM in a single profile at steady state. A rock particle leaves the unweathered bedrock with production rate $P$, and transits vertically through a regolith of height $h$. As the particle transits upwards, some fraction of the calcium and magnesium in the particle ($x$) leaves the regolith column as solutes ($W$) due to chemical weathering. The fraction of calcium and magnesium remaining in the weatherable minerals after transiting through the regolith column leaves via physical erosion ($E$) along with other residual weathering products.}
+	\caption{A schematic representation of the silicate weathering component of GEOCLIM in a single profile at steady-state. A rock particle leaves the unweathered bedrock with production rate $P$, and transits vertically through a regolith of height $h$. Regolith production and physical erosion ($E$) are equal at steady-state. As the particle transits upwards, some fraction of the primary phases ($x$) are chemically weathered ($W$) with the flux of Ca and Mg corresponding to that weathering rate multiplied by the concentration of Ca+Mg in unweathered bedrock ($\chi_{CaMg}$).}
 	\label{fig:regolith_schematic}
 \end{center}
 \end{SCfigure}
 
-The silicate weathering of GEOCLIM models the geochemical evolution of a rock particle as it leaves unweathered bedrock and transits through overlying regolith (Fig. \ref{fig:regolith_schematic}). The usage of regolith here defines it as the chemically weathered profile where the base of the regolith is the contact with unweathered bedrock. The component is based upon the theoretical model of \citet{Gabet2009a}, in which material enters the regolith through the downward propagation of the weathering front, and leaves the regolith through physical erosion at the land surface and through the transport of dissolved phases by chemical weathering.
-
-The fundamental processes within the silicate weathering are described by the following system of three equations:
+The silicate weathering portion of the GEOCLIM model implements the model of \cite{Gabet2009a} for the development of a chemically weathered profile. We refer to this chemically weathered profile as regolith where the base of the regolith is the contact with unweathered bedrock. In the model of \citet{Gabet2009a}, material enters the regolith and leaves either as a solute through chemical weathering as a particle transit through the regolith or as a physically weathered particle once it reaches the top. We use the DynSoil implementation of the \cite{Gabet2009a} model which integrates a climatic dependence on the chemical weathering that occurs within the regolith using the formulation of \cite{West2012a}. The transient time-varying versions of this regolith model is described by the following system of three equations which form the basis of DynSoil:
 
 \begin{equation}
     \frac{dh}{dt} = P - E
@@ -116,7 +114,7 @@ The fundamental processes within the silicate weathering are described by the fo
 \end{equation}
 
 \noindent
-Equation \ref{eq:1} is simply a statement of mass conservation, where $h$ is the total height of the regolith (m), $t$ is the time in the model (yr), $P$ is the regolith production rate (m/yr), and $E$ is the physical erosion rate (m/yr). Equation \ref{eq:2} describes how the residual fraction of weatherable phases ($x$, unitless) changes as time in the model ($t$, yr) progresses, where $z$ is the height above the base of the regolith (m). $K \tau^{\sigma}$ is the dissolution rate constant, which depends on the local climate (captured by $K$, yr$^{-1-\sigma}$) and the time that a given rock particle has spent in the regolith ($\tau$, yr) to some power $\sigma$ (unitless). Equation \ref{eq:3} describes how the time that a given rock particle has spent in the regolith changes as time in the model progresses.
+Equation \ref{eq:1} is a statement of material conservation, where $h$ is the total height of the regolith (m), $t$ is the time in the model (yr), $P$ is the regolith production rate (m/yr), and $E$ is the physical erosion rate (m/yr). Equation \ref{eq:2} describes how the residual fraction of weatherable phases ($x$, unitless) changes as a function of time ($t$, yr) and depth (where $z$ is the height above the base of the regolith; m). $K \tau^{\sigma}$ is the dissolution rate constant, which depends on the local climate (captured by $K$, yr$^{-1-\sigma}$) and the time that a given rock particle has spent in the regolith ($\tau$, yr) to some power $\sigma$ (unitless) which implements a time-dependence. Equation \ref{eq:3} describes how the time that a given rock particle has spent in the regolith changes as time in the model progresses.
 
 The net weathering rate in the regolith column ($W$, m/yr) can then be calculated with:
 
@@ -125,29 +123,39 @@ The net weathering rate in the regolith column ($W$, m/yr) can then be calculate
     \label{eq:4}
 \end{equation}
 
-The steady state solution of the silicate weathering is obtained by setting the left hand side of Equations \ref{eq:1}, \ref{eq:2} and \ref{eq:3} to zero.
+The erosion rate (E; m/yr) in the silicate weathering module of GEOCLIM follows one of the approaches taken in \citet{Maffre2018a} where it is parameterized based on runoff (q; m/yr) and slope (s; m/m):
 
-\citet{Heimsath1997a} found that the rate at which material is entrained into the physically disturbed portion of the regolith (often called soil production) declines exponentially with increasing depth of this disturbed layer. The regolith model that we use does not differentiate the physically disturbed portion of the regolith, but given that the extent of weathering in the regolith below the physically disturbed layer has been found to covary with the rate of soil production \citep{Burke2007a}, we assume that regolith production behaves similarly to soil production:
+\begin{equation}
+    E = k_{e}\;q^{m}\;s^{n}
+    \label{eq:9}
+\end{equation}
+
+$k_{e}$ is a proportionality constant ((m/yr)$^{1-m}$) and $m$ and $n$ are adjustable exponents that are kept as 0.5 and 1 as in \citet{Maffre2018a}. This formulation is similar to the large-scale BQART model of \citet{Syvitski2007a}, but without there being an implemented temperature dependence and by replacing elevation with slope such that it more closely follows the stream power law functional form \citep{Davy2000a}. This form and these exponent values are supported by compilations, such as that in \citet{Lague2014a}, although \citet{Lague2014a} also suggests that there is variability in the proportionality constant that is difficult to capture at a global scale.
+
+The regolith production rate can be expressed as the product of the optimal production rate ($P_{0}$) and the soil production function:
 
 \begin{equation}
     P = P_{0}\;f(h)
     \label{eq:5}
 \end{equation}
 
-\begin{equation}
-    P_{0} = k_{rp}\;q\;e^{-\frac{E_{a}}{R}\left(\frac{1}{T}-\frac{1}{T_{0}}\right)}
-    \label{eq:6}
-\end{equation}
+In this implementation of DynSoil, we use an exponential soil production function as is commonly applied in the literature (e.g. \citealp{Gabet2009a}) and follows the form as in \citet{Heimsath1997a}, where $d_{0}$ is a reference regolith thickness (m). Here, $f(h)$ is the `soil production function,' which describes how regolith production decreases as the thickness of the regolith increases.
 
 \begin{equation}
     f(h) = e^{-\frac{-h}{d_{0}}}
     \label{eq:7}
 \end{equation}
 
-\noindent
-$P_{0}$ is the `optimal' regolith production rate (m/yr), which is defined to be the regolith production rate when there is no overlying regolith. In Equation \ref{eq:6}, we parameterize this value using the model of \citet{Carretier2014a}, where $k_{rp}$ is a proportionality constant (unitless), $q$ is the runoff (m/yr), $E_{a}$ is the activation energy (J/K/mol), $R$ is the universal gas constant (J/mol), $T$ is the temperature (K), and $T_{0}$ is the reference temperature (K). $f(h)$ is the `soil production function,' which describes how regolith production decreases as the thickness of the regolith increases. In Equation \ref{eq:7}, we use an exponential equation to represent the soil production function as in \citet{Heimsath1997a}, where $d_{0}$ is a reference regolith thickness (m).
+$P_{0}$ is the `optimal' regolith production rate (m/yr), which is defined to be the regolith production rate when there is no overlying regolith. In Equation \ref{eq:6}, we parameterize this value using the model of \citet{Carretier2014a}, where $k_{rp}$ is a proportionality constant (unitless), $q$ is the runoff (m/yr), $E_{a}$ is the activation energy (J/K/mol), $R$ is the universal gas constant (J/mol), $T$ is the temperature (K), and $T_{0}$ is the reference temperature (K).
 
-The $K$ in the dissolution rate constant in Equation \ref{eq:2} describes the dependence of the dissolution rate on climate:
+\begin{equation}
+    P_{0} = k_{rp}\;q\;e^{-\frac{E_{a}}{R}\left(\frac{1}{T}-\frac{1}{T_{0}}\right)}
+    \label{eq:6}
+\end{equation}
+
+%\citet{Heimsath1997a} found that the rate at which material is entrained into the physically disturbed portion of the regolith (often called soil production) declines exponentially with increasing depth of this disturbed layer. The regolith model that we use does not differentiate the physically disturbed portion of the regolith, but given that the extent of weathering in the regolith below the physically disturbed layer has been found to covary with the rate of soil production \citep{Burke2007a}, we assume that regolith production behaves similarly to soil production:
+
+The $K$ in the dissolution rate constant in Equation \ref{eq:2} describes the dependence of the chemical weathering on climate:
 
 \begin{equation}
     K = k_{d}\left(1-e^{-k_{w}q}\right)e^{-\frac{E_{a}}{R}\left(\frac{1}{T}-\frac{1}{T_{0}}\right)}
@@ -155,17 +163,21 @@ The $K$ in the dissolution rate constant in Equation \ref{eq:2} describes the de
 \end{equation}
 
 \noindent
-Equation \ref{eq:8} is an empirical simplification of mineral dissolution rates derived from kinetic theory and laboratory experiments \citet{West2012a}, where $k_{d}$ is a proportionality constant that modifies the dependence of dissolution rate on runoff and temperature (yr$^{-1-\sigma}$), and $k_{w}$ is a proportionality constant that modified the dependence of dissolution rate on runoff only (yr/m).
+Equation \ref{eq:8} is an empirical simplification of mineral dissolution rates derived from kinetic theory and laboratory experiments \citep{West2012a}, where $k_{d}$ is a proportionality constant that modifies the dependence of dissolution rate on runoff and temperature (yr$^{-1-\sigma}$), and $k_{w}$ is a proportionality constant that modifies the dependence of dissolution rate on runoff (yr/m). As described below, in our implementation of the model, we vary $k_{d}$, $k_{w}$ and $\sigma$ and compare the resulting calculated chemical weathering fluxes to data compilations. We take varying parameter combinations that result in the better fits between the modeled fluxes and the data and use them for the GEOCLIM simulations.
 
-Finally, the erosion rate in the silicate weathering of GEOCLIM uses the parameterization of \citet{Maffre2018a}, which combines the small-scale incision model of \citet{Davy2000a} with the large-scale BQART model of \citet{Syvitski2007a}:
+For our application of DynSoil, we are interested in obtaining the steady-state solution rather than the transient time-varying solution. The steady-state solution for DynSoil can be calculated analytically by setting the time derivatives equal to zero resulting in the following set of equations where $x_s$ is the proportion of primary phases remaining at the top of the column of regolith:
 
-\begin{equation}
-    E = k_{e}\;q^{m}\;s^{n}
-    \label{eq:9}
+\begin{equation}\label{eq:dynsoil_ss}
+\left\{\ 
+\begin{aligned}
+& h        \ =\   f^{-1}\left( \frac{P_o}{E} \right)                                                 \\
+& z(x)     \ =\   E \cdot\! \left( \frac{ (\sigma+1) \log(\frac{1}{x}) }{ K } \right) ^ \frac{1}{\sigma+1}                                                                  \\
+& x_s      \ =\   \exp\left(   - \frac{K}{\sigma+1}  \left(\frac{h}{E}\right)^{\sigma+1}   \right)   \\
+& W        \ =\   (1-x_s) \, E                                                                           \\
+\end{aligned}
+\right.
 \end{equation}
 
-\noindent
-$k_{e}$ is a proportionality constant ((m/yr)$^{1-m}$), $s$ is the slope (m/m), and $m$ and $n$ are adjustable exponents.
 
 XXX
 
