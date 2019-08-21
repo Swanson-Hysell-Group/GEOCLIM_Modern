@@ -68,7 +68,7 @@
 \begin{document}
 
 \begin{flushleft}
-{\Large \textbf{Data Repository for ``GEOCLIM Modern''}}
+{\Large \textbf{Supplemental Information for ``GEOCLIM Modern''}}
 \\
 Yuem Park\textsuperscript{1},
 Nicholas L. Swanson-Hysell\textsuperscript{1},
@@ -84,7 +84,7 @@ Yves Godd\'eris\textsuperscript{2}
 
 \linenumbers
 
-These repository materials provide details on the model framework used in this study. All of the Python code used for this study can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
+These repository materials provide details on the model framework used in this study. Python code used for this study can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
 
 \section*{Silicate Weathering Component}
 
@@ -123,7 +123,7 @@ The net weathering rate in the regolith column ($W$, m/yr) can then be calculate
     \label{eq:4}
 \end{equation}
 
-The erosion rate (E; m/yr) in the silicate weathering module of GEOCLIM follows one of the approaches taken in \citet{Maffre2018a} where it is parameterized based on runoff (q; m/yr) and slope (s; m/m):
+The erosion rate (E; m/yr) in the silicate weathering module of GEOCLIM follows one of the approaches taken in \citet{Godderis2017c} and \citet{Maffre2018a} where it is parameterized based on runoff (q; m/yr) and slope (s; m/m):
 
 \begin{equation}
     E = k_{e}\;q^{m}\;s^{n}
@@ -165,21 +165,21 @@ The $K$ in the dissolution rate constant in Equation \ref{eq:2} describes the de
 \noindent
 Equation \ref{eq:8} is an empirical simplification of mineral dissolution rates derived from kinetic theory and laboratory experiments \citep{West2012a}, where $k_{d}$ is a proportionality constant that modifies the dependence of dissolution rate on runoff and temperature (yr$^{-1-\sigma}$), and $k_{w}$ is a proportionality constant that modifies the dependence of dissolution rate on runoff (yr/m). As described below, in our implementation of the model, we vary $k_{d}$, $k_{w}$ and $\sigma$ and compare the resulting calculated chemical weathering fluxes to data compilations. We take varying parameter combinations that result in the better fits between the modeled fluxes and the data and use them for the GEOCLIM simulations.
 
-For our application of DynSoil, we are interested in obtaining the steady-state solution rather than the transient time-varying solution. The steady-state solution for DynSoil can be calculated analytically by setting the time derivatives equal to zero resulting in the following set of equations where $x_s$ is the proportion of primary phases remaining at the top of the column of regolith:
+For our application of DynSoil, we are interested in obtaining the steady-state solution rather than the transient time-varying solution. The steady-state solution for DynSoil can be calculated analytically by setting the time derivatives equal to zero resulting in the following set of equations.
 
 \begin{equation}\label{eq:dynsoil_ss}
 \left\{\ 
 \begin{aligned}
-& h        \ =\   f^{-1}\left( \frac{P_o}{E} \right)                                                 \\
-& z(x)     \ =\   E \cdot\! \left( \frac{ (\sigma+1) \log(\frac{1}{x}) }{ K } \right) ^ \frac{1}{\sigma+1}                                                                  \\
-& x_s      \ =\   \exp\left(   - \frac{K}{\sigma+1}  \left(\frac{h}{E}\right)^{\sigma+1}   \right)   \\
-& W        \ =\   (1-x_s) \, E                                                                           \\
+& h   \ =\    \max\left(  \;  0  \;,\;  d_o \log\left(\frac{P_o}{E}\right)  \right)                                                 \\
+& x(z)      \ =\   \exp\left(   - \frac{K}{\sigma+1}  \left(\frac{z}{E}\right)^{\sigma+1}   \right)   \\
+& W        \ =\   (1-x(h)) \, E  \ =\   (1-x_s) \, E                                                                         \\
 \end{aligned}
 \right.
 \end{equation}
 
+\noindent $x(z)$ gives the curve of primary phases varying with height upward from the base of the regolith as shown in Figure \ref{fig:regolith_schematic}. Setting z equal to regolith thickness (h) gives $x_s$ which is the proportion of primary phases remaining at the top of the column of regolith. This value controls the overall integrated chemical weathering rate out of the regolith.
 
-XXX
+To calculate the flux of Ca and Mg associated with chemical weathering, we need to assign the concentration of Ca and Mg ($\chi_{CaMg}$) within the unweathered bedrock (Fig. \ref{fig:regolith_schematic}). Previous implementations of GEOCLIM have taken bulk continental crust values across all land. Given that the hypothesis we seek to test involves the varying concentration of cations in different lithologies, we have implemented a lithological resolved version of the model. To do so, we grouped 
 
 Add Ca+Mg concentrations
 
