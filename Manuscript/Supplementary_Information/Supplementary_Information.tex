@@ -44,12 +44,16 @@
 %\makeatother
 
 % Self defined commands
-\newcommand{\degC}{$^{\circ}$C\xspace}
+\newcommand{\degreesC}{\textdegree C\xspace}
+\newcommand{\degrees}{\textdegree\xspace}
 \newcommand{\dC}{$\delta^{13}$C\xspace}
 \newcommand{\dO}{$\delta^{18}$O\xspace}
 \newcommand{\SrSr}{$^{87}$Sr/$^{86}$Sr\xspace}
 \newcommand{\permil}{\textperthousand\xspace}
-\newcommand{\dsil}{$d$\xspace}
+\newcommand{\UPb}{$^{206}$Pb/$^{238}$U\xspace}
+\newcommand{\pCOtwo}{\textit{p}CO$_{2}$\xspace}
+\newcommand{\COtwo}{CO$_{2}$\xspace}
+%
 
 \setcounter{figure}{0}
 \renewcommand{\thefigure}{SI\arabic{figure}}
@@ -62,29 +66,35 @@
 \pagestyle{myheadings}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Park et al., in review for XXX}
+\lhead{Park et al., in preparation}
 \rhead{\thepage}
 
 \begin{document}
 
 \begin{flushleft}
-{\Large \textbf{Supplemental Information for ``GEOCLIM Modern''}}
-\\
+{\Large \textbf{Supplementary Information for ``Emergence of Indonesia and New Guinea as a driver for Neogene cooling''}}
+
 Yuem Park\textsuperscript{1},
 Nicholas L. Swanson-Hysell\textsuperscript{1},
-Pierre Maffre\textsuperscript{2},
-Yves Godd\'eris\textsuperscript{2}
-\\
+Pierre Maffre\textsuperscript{1},
+Francis A. Macdonald\textsuperscript{2},
+Eliel A. Anttila\textsuperscript{2},
+Yves Godd\'eris\textsuperscript{3}
+
 \bigskip
 \textsuperscript{1} Department of Earth and Planetary Science, University of California, Berkeley, CA, USA
-\\
+
+\textsuperscript{2} Department of Earth Science, University of California, Santa Barbara, CA, USA
+
+\textsuperscript{3} G\'eosciences Environnement Toulouse, CNRS--Universit\'e Paul Sabatier - IRD, Toulouse, France
+
 \bigskip
 
 \end{flushleft}
 
 \linenumbers
 
-These repository materials provide details on the model framework used in this study. Python code used for this study can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
+These supplementary information materials provide details on the model framework used in this study. Python code used for this study can be found at: \url{https://github.com/Swanson-Hysell-Group/XXX}.
 
 \section*{Silicate Weathering Component}
 
@@ -96,7 +106,7 @@ These repository materials provide details on the model framework used in this s
 \end{center}
 \end{SCfigure}
 
-The silicate weathering portion of the GEOCLIM model implements the model of \cite{Gabet2009a} for the development of a chemically weathered profile. We refer to this chemically weathered profile as regolith where the base of the regolith is the contact with unweathered bedrock. In the model of \citet{Gabet2009a}, material enters the regolith and leaves either as a solute through chemical weathering as a particle transit through the regolith or as a physically weathered particle once it reaches the top. We use the DynSoil implementation of the \cite{Gabet2009a} model which integrates a climatic dependence on the chemical weathering that occurs within the regolith using the formulation of \cite{West2012a}. The transient time-varying versions of this regolith model is described by the following system of three equations which form the basis of DynSoil:
+The silicate weathering component of the GEOCLIM model implements the model of \cite{Gabet2009a} for the development of a chemically weathered profile. We refer to this chemically weathered profile as regolith where the base of the regolith is the contact with unweathered bedrock. In the model of \citet{Gabet2009a}, material enters the regolith and leaves either as a solute through chemical weathering as a particle transit through the regolith or as a physically weathered particle once it reaches the top. We use the DynSoil implementation of the \cite{Gabet2009a} model which integrates a climatic dependence on the chemical weathering that occurs within the regolith using the formulation of \cite{West2012a}. The transient time-varying versions of this regolith model is described by the following system of three equations which form the basis of DynSoil:
 
 \begin{equation}
     \frac{dh}{dt} = P - E
@@ -153,8 +163,6 @@ $P_{0}$ is the `optimal' regolith production rate (m/yr), which is defined to be
     \label{eq:6}
 \end{equation}
 
-%\citet{Heimsath1997a} found that the rate at which material is entrained into the physically disturbed portion of the regolith (often called soil production) declines exponentially with increasing depth of this disturbed layer. The regolith model that we use does not differentiate the physically disturbed portion of the regolith, but given that the extent of weathering in the regolith below the physically disturbed layer has been found to covary with the rate of soil production \citep{Burke2007a}, we assume that regolith production behaves similarly to soil production:
-
 The $K$ in the dissolution rate constant in Equation \ref{eq:2} describes the dependence of the chemical weathering on climate:
 
 \begin{equation}
@@ -163,9 +171,9 @@ The $K$ in the dissolution rate constant in Equation \ref{eq:2} describes the de
 \end{equation}
 
 \noindent
-Equation \ref{eq:8} is an empirical simplification of mineral dissolution rates derived from kinetic theory and laboratory experiments \citep{West2012a}, where $k_{d}$ is a proportionality constant that modifies the dependence of dissolution rate on runoff and temperature (yr$^{-1-\sigma}$), and $k_{w}$ is a proportionality constant that modifies the dependence of dissolution rate on runoff (yr/m). As described below, in our implementation of the model, we vary $k_{d}$, $k_{w}$ and $\sigma$ and compare the resulting calculated chemical weathering fluxes to data compilations. We take varying parameter combinations that result in the better fits between the modeled fluxes and the data and use them for the GEOCLIM simulations.
+Equation \ref{eq:8} is an empirical simplification of mineral dissolution rates derived from kinetic theory and laboratory experiments \citep{West2012a}, where $k_{d}$ is a proportionality constant that modifies the dependence of dissolution rate on runoff and temperature (yr$^{-1-\sigma}$), and $k_{w}$ is a proportionality constant that modifies the dependence of dissolution rate on runoff (yr/m).
 
-For our application of DynSoil, we are interested in obtaining the steady-state solution rather than the transient time-varying solution. The steady-state solution for DynSoil can be calculated analytically by setting the time derivatives equal to zero resulting in the following set of equations.
+For our application of DynSoil, we are interested in obtaining the steady-state solution rather than the transient time-varying solution. The steady-state solution for DynSoil can be calculated analytically by setting the time derivatives equal to zero resulting in the following set of equations:
 
 \begin{equation}\label{eq:dynsoil_ss}
 \left\{\ 
@@ -177,23 +185,56 @@ For our application of DynSoil, we are interested in obtaining the steady-state 
 \right.
 \end{equation}
 
-\noindent $x(z)$ gives the curve of primary phases varying with height upward from the base of the regolith as shown in Figure \ref{fig:regolith_schematic}. Setting z equal to regolith thickness (h) gives $x_s$ which is the proportion of primary phases remaining at the top of the column of regolith. This value controls the overall integrated chemical weathering rate out of the regolith.
+\noindent
+$x(z)$ gives the curve of primary phases varying with height upward from the base of the regolith as shown in Figure \ref{fig:regolith_schematic}. Setting $z$ equal to regolith thickness ($h$) gives $x_s$ which is the proportion of primary phases remaining at the top of the column of regolith. This value controls the overall integrated chemical weathering rate out of the regolith.
 
-To calculate the flux of Ca and Mg associated with chemical weathering, we need to assign the concentration of Ca and Mg ($\chi_{CaMg}$) within the unweathered bedrock (Fig. \ref{fig:regolith_schematic}). Previous implementations of GEOCLIM have taken bulk continental crust values across all land. Given that the hypothesis we seek to test involves the varying concentration of cations in different lithologies, we have implemented a lithological resolved version of the model. To do so, we grouped 
+\section*{Implementation of Lithology}
 
-Add Ca+Mg concentrations
+To calculate the flux of Ca and Mg associated with chemical weathering, we need to assign the concentration of Ca and Mg ($\chi_{CaMg}$) within the unweathered bedrock (Fig. \ref{fig:regolith_schematic}). Previous implementations of GEOCLIM have taken bulk continental crust values across all land. Given that the hypothesis we seek to test involves the varying concentration of cations in different lithologies, we have implemented a lithologically resolved version of the model.
+
+\begin{table}[h!]
+\begin{center}
+\resizebox{0.7\textwidth}{!}{
+    \begin{tabular}{cll|cl}
+    \textbf{GLiM} & \textbf{GLiM} & \textbf{GLiM} & \textbf{GEOCLIM} & \textbf{GEOCLIM}\\
+    \textbf{ID} & \textbf{code} & \textbf{classification} & \textbf{ID} & \textbf{classification}\\
+    \hline
+    1 & su & unconsolidated sediments & 6 & sediments \\
+    2 & vb & basic volcanic rocks & 4 & mafics \\
+    3 & ss & siliciclastic sedimentary rocks & 6 & sediments \\
+    4 & pb & basic plutonic rocks & 4 & mafics \\
+    5 & sm & mixed sedimentary rocks & 6 & sediments \\
+    6 & sc & carbonate sedimentary rocks & 5 & carbonates \\
+    7 & va & acid volcanic rocks & 2 & felsics \\
+    8 & mt & metamorphics & 1 & metamorphics \\
+    9 & pa & acid plutonic rocks & 2 & felsics \\
+    10 & vi & intermediate volcanic rocks & 3 & intermediates \\
+    11 & wb & water bodies & 0 & water/ice \\
+    12 & py & pyroclastics & 2 & felsics \\
+    13 & pi & intermediate plutonic rocks & 3 & intermediates \\
+    14 & ev & evaporites & 5 & carbonates \\
+    15 & nd & no data & 1 & metamorphics \\
+    16 & ig & ice and glaciers & 0 & water/ice \\
+    \end{tabular}
+}
+\vspace{10pt}
+\caption{Grouping of 16 lithologic categories in GLiM \citep{Hartmann2012a} to 6 broader categories for GEOCLIM.}
+\label{tab:GLiM_to_GEOCLIM}
+\end{center}
+\end{table}
+
+The spatial distribution of lithologies is sourced from the global lithologic map (GLiM) of \citet{Hartmann2012a}. The raw data takes the form of polygon vectors, where each polygon is assigned one of 16 lithologic categories. We first group these 16 categories into 6 broader categories (metamorphic, felsic, intermediate, mafic, carbonate, and siliciclastic sediment; Table \ref{tab:GLiM_to_GEOCLIM}). We then rasterize the polygon vectors to 0.1\degrees $\times$ 0.1\degrees resolution, where each pixel is assigned the lithologic category of the polygon that covers the most area of that pixel (i.e. the `mode' lithology; Fig. XX).
+
+
+
+%% FROM MAIN TEXT
+The spatial distribution of lithologies is sourced from the global lithologic map (GLiM) of \citet{Hartmann2012a} with the 16 lithologic categories represented in GLiM grouped into 6 broader categories: metamorphic, felsic, intermediate, mafic, carbonate, and siliciclastic sediment (Fig. SX). Each continental grid cell is assigned one of these lithologic categories at a resolution of 0.1\degrees $\times$ 0.1\degrees. The Ca+Mg concentrations of felsic, intermediate, and mafic grid cells are then assigned based on the mean of MgO and CaO measurements on rocks of each of these lithologic categories in data compiled from the EarthChem Portal (\url{www.earthchem.org/portal}). The weathering of carbonate grid cells does not contribute to long-term \COtwo consumption and therefore its Ca+Mg concentration is ignored in this analysis. The Ca+Mg concentrations of metamorphic and siliciclastic sediment grid cells are more difficult to define, since the chemical composition of these two lithologic classes is strongly dependent on its protolith. The chemical composition of siliciclastic sediment is further strongly dependent on its degree of chemical depletion. We therefore explore a range of feasible Ca+Mg concentrations of metamorphic and siliciclastic sediment grid cells during the calibration of the silicate weathering component of GEOCLIM (see below).
 
 \section*{Choice of Parameters}
 
 XXX
 
 Experimental determinations of the activation energy (E$_a$) associated with the weathering of silicate minerals are variable \citep{Brantley2003a}. However, multiple efforts to invert for E$_a$ in basaltic watersheds with varying temperature have yielded values (41.6$\pm$3.2 kJ/mol in \citealp{Li2016a}; 42.3 kJ/mol in \citealp{Dessert2001a}) that are consistent with the lower end of activation energies of Ca+Mg bearing minerals in laboratory experiments such as that for diopside (40.5$\pm$1.7 kJ/mol; \citealp{Knauss1993a}) and for labradorite (42.1 kJ/mol; \citealp{Carroll2005a}. We use the values of 42 kJ/mol in our model runs.
-
-\section*{Lithology Implementation}
-
-XXX
-
-going from GLiM to our lithologic classes.
 
 \clearpage
 
