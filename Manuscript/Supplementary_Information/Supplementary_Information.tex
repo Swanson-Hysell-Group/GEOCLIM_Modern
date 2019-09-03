@@ -267,7 +267,7 @@ However, as discussed in the main text, $k_{d}$ (Equation \ref{eq:9}), $k_{w}$ (
 \end{center}
 \end{table}
 
-We then compute spatially-resolved long-term \COtwo consumption (i.e. Ca+Mg consumption) using present-day runoff, temperature, and slope fields. As described in the main text, we then sum the computed \COtwo consumption over large-scale watersheds that appear in the global compilation of \citet{Gaillardet1999a}, as well as smaller-scale watersheds of the Amazon Basin in the compilation of \citet{Moquet2011a, Moquet2016a, Moquet2018a}. 80 watersheds in total are used in this study. We then calculate the coefficient of determination ($r^{2}$) between computed and measured \COtwo consumption in each of these basins:
+We then compute spatially-resolved long-term \COtwo consumption (i.e. Ca+Mg consumption) using present-day runoff, temperature, and slope fields. As described in the main text, we then sum the computed \COtwo consumption over large-scale watersheds that appear in the global compilation of \citet{Gaillardet1999a}, as well as smaller-scale watersheds of the Amazon Basin (HYBAM network) in the compilation of \citet{Moquet2011a, Moquet2016a, Moquet2018a}. 80 watersheds in total are used in this study. We then calculate the coefficient of determination ($r^{2}$) between computed and measured \COtwo consumption in each of these basins:
 
 \begin{equation}
     r^{2} = 1 - \frac{\sum\left[ \log_{10}(M_{i}) - \log_{10}(O_{i}) \right]^{2}}{\sum\left[ \log_{10}(O_{i}) - \overline{\log_{10}(O)} \right]^{2}}
@@ -277,12 +277,23 @@ We then compute spatially-resolved long-term \COtwo consumption (i.e. Ca+Mg cons
 \noindent
 $M_{i}$ is the modeled \COtwo consumption over watershed $i$, $O_{i}$ is the observed \COtwo consumption over watershed $i$, and $\overline{\log_{10}(O)}$ is the mean of the log of observed \COtwo consumption over all watersheds.
 
-% FIGURE: CO2 consumption vs r^2
-% FIGURE: CO2 consumption cross plot
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{Manuscript/Figures/W_vs_r2.pdf}
+    \caption{Modeled global \COtwo consumption vs. the coefficient of determination ($r^{2}$) between computed and measured \COtwo consumption in each of the watersheds. Each point represents model output using one of the 78,000 parameter combinations. The right panel is zoomed to the plotting space with the highest $r^{2}$'s.}
+    \label{fig:W_vs_r2}
+\end{figure}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{Manuscript/Figures/r2_cross_plot.pdf}
+    \caption{Modeled vs. observed \COtwo consumption in watersheds around the world. \textbf{A)} Each point represents a single watershed, and the y-value of the point shows the mean value of the 3,339 parameter combinations that produce individual watershed \COtwo consumption fluxes that approximate those estimated in the literature for the present-day. Whiskers extend to the minimum and maximum modeled watershed \COtwo consumption fluxes for the 3,339 parameters combinations. \textbf{B)} Same as A, but only showing the parameter combination that produced that highest $r^{2}$.}
+    \label{fig:r2_cross_plot}
+\end{figure}
 
-%% FROM MAIN TEXT
-Of the various parameters used in the equations that govern the silicate weathering component of GEOCLIM (see SI), four parameters in particular are poorly constrained in the existing literature: the proportionality constant that modifies the dependence of dissolution rate on runoff and temperature ($k_{d}$), the proportionality constant that modifies the dependence of dissolution rate on runoff only ($k_{w}$), the power constant that modifies the dependence of dissolution rate on the time that a rock particle has spent in the regolith ($\sigma$), and the proportionality constant that modifies the dependence of regolith production on runoff and temperature ($k_{rp}$). As discussed above, the Ca+Mg concentrations of metamorphic and siliciclastic sediment grid cells are also difficult to define. Rather than prescribing values for these six parameters, we instead allow these parameters to vary within reasonable bounds, resulting in a total of 78,000 unique parameter combinations. For each of these combinations, we compute spatially-resolved long-term \COtwo consumption (i.e. Ca+Mg consumption) using present-day runoff, temperature, and slope fields. Following the approach of \citet{Maffre2018a}, we then sum the computed \COtwo consumption over large-scale watersheds that appear in the global compilation of \citet{Gaillardet1999a}, as well as smaller-scale watersheds of the Amazon Basin in the compilation of \citet{Moquet2011a, Moquet2016a, Moquet2018a}. We then calculate the coefficient of determination ($r^{2}$) between computed and measured \COtwo consumption in each of these basins. We eliminate all parameter combinations that result in unreasonable total global \COtwo consumption (which we define to be \textless1$\times$10$^{12}$~mol/yr or \textgreater1$\times$10$^{13}$~mol/yr) and/or result in a low $r^{2}$ (which we define to be \textless0.4). This calibration method leaves 3,339 unique parameter combinations that produce global and individual watershed \COtwo consumption fluxes that approximate those estimated in the literature for the present-day.
+% HYBAM description and dashed lines
+
+The majority of the original 78,000 parameter combinations produce \COtwo consumption maps with poor fits to the measured watershed data (Fig. \ref{fig:W_vs_r2}). However, given the right permutation of parameters, GEOCLIM produces \COtwo consumption maps that fit the measured watershed data reasonably well. We therefore eliminate all parameter combinations that produce a $r^{2}\textless0.4$, which leaves 3,339 unique parameter combinations (Figs. \ref{fig:W_vs_r2} and \ref{fig:r2_cross_plot}). We note that these 3,339 combinations also all produce total global \COtwo consumption estimates that fall within the range of those estimated in the literature for the present-day. However, this is an expected outcome, given that total global \COtwo consumption is often estimated in the literature using the same measured watershed \COtwo consumption that we compare to.
 
 \section*{Climate Model}
 
