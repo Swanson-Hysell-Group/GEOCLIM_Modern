@@ -101,7 +101,7 @@ These supplementary information materials provide details on the model framework
 \begin{SCfigure}[0.6][h!]
 \begin{center}
 	\includegraphics[width=0.6\textwidth]{../Figures/regolith_schematic.pdf}
-	\caption{A schematic representation of the silicate weathering component of GEOCLIM in a single profile at steady-state. A rock particle leaves the unweathered bedrock with production rate $P$, and transits vertically through a regolith of height $h$. Regolith production and physical erosion ($E$) are equal at steady-state. As the particle transits upwards, some fraction of the primary phases ($x$) are chemically weathered ($W$) with the flux of Ca and Mg corresponding to that weathering rate multiplied by the concentration of Ca+Mg in unweathered bedrock ($\chi_{CaMg}$).}
+	\caption{A schematic representation of the silicate weathering component of GEOCLIM in a single profile at steady-state. A rock particle leaves the unweathered bedrock with production rate $P_{r}$, and transits vertically through a regolith of height $h$. Regolith production and physical erosion ($E_{p}$) are equal at steady-state. As the particle transits upwards, some fraction of the primary phases ($x$) are chemically weathered ($W$) with the flux of Ca and Mg corresponding to that weathering rate multiplied by the concentration of Ca+Mg in unweathered bedrock ($\chi_{CaMg}$).}
 	\label{fig:regolith_schematic}
 \end{center}
 \end{SCfigure}
@@ -109,22 +109,22 @@ These supplementary information materials provide details on the model framework
 The silicate weathering component of the GEOCLIM model implements the model of \cite{Gabet2009a} for the development of a chemically weathered profile. We refer to this chemically weathered profile as regolith where the base of the regolith is unweathered bedrock. In the model of \citet{Gabet2009a}, material enters the regolith and leaves either as a solute through chemical weathering as a particle transits through the regolith or as a physically weathered particle once it reaches the top. We use the DynSoil implementation of the \cite{Gabet2009a} model which integrates a climatic dependence on the chemical weathering that occurs within the regolith using the formulation of \cite{West2012a}. The transient time-varying version of this regolith model is described by the following system of three equations which form the basis of DynSoil:
 
 \begin{equation}
-    \frac{dh}{dt} = P - E
+    \frac{dh}{dt} = P_{r} - E_{p}
     \label{eq:1}
 \end{equation}
 
 \begin{equation}
-    \frac{\partial x}{\partial t} = -P \frac{\partial x}{\partial z} - K \tau^{\sigma}x
+    \frac{\partial x}{\partial t} = -P_{r} \frac{\partial x}{\partial z} - K \tau^{\sigma}x
     \label{eq:2}
 \end{equation}
 
 \begin{equation}
-    \frac{\partial \tau}{\partial t} = -P \frac{\partial \tau}{\partial z} + 1
+    \frac{\partial \tau}{\partial t} = -P_{r} \frac{\partial \tau}{\partial z} + 1
     \label{eq:3}
 \end{equation}
 
 \noindent
-Equation \ref{eq:1} is a statement of material conservation, where $h$ is the total height of the regolith (m), $t$ is the time in the model (yr), $P$ is the regolith production rate (m/yr), and $E$ is the physical erosion rate (m/yr). Equation \ref{eq:2} describes how the residual fraction of weatherable phases ($x$, unitless) changes as a function of time ($t$, yr) and depth (where $z$ is the height above the base of the regolith; m). $K \tau^{\sigma}$ is the dissolution rate constant, which depends on the local climate (captured by $K$, yr$^{-1-\sigma}$) and the time that a given rock particle has spent in the regolith ($\tau$, yr) to some power $\sigma$ (unitless) which implements a time-dependence. Equation \ref{eq:3} describes how the time that a given rock particle has spent in the regolith changes as time in the model progresses.
+Equation \ref{eq:1} is a statement of material conservation, where $h$ is the total height of the regolith (m), $t$ is the time in the model (yr), $P_{r}$ is the regolith production rate (m/yr), and $E_{p}$ is the physical erosion rate (m/yr). Equation \ref{eq:2} describes how the residual fraction of weatherable phases ($x$, unitless) changes as a function of time ($t$, yr) and depth (where $z$ is the height above the base of the regolith; m). $K \tau^{\sigma}$ is the dissolution rate constant, which depends on the local climate (captured by $K$, yr$^{-1-\sigma}$) and the time that a given rock particle has spent in the regolith ($\tau$, yr) to some power $\sigma$ (unitless) which implements a time-dependence. Equation \ref{eq:3} describes how the time that a given rock particle has spent in the regolith changes as time in the model progresses.
 
 The net weathering rate in the regolith column ($W$, m/yr) can then be calculated with:
 
@@ -136,7 +136,7 @@ The net weathering rate in the regolith column ($W$, m/yr) can then be calculate
 The regolith production rate can be expressed as the product of the optimal production rate ($P_{0}$) and a soil production function ($f(h)$):
 
 \begin{equation}
-    P = P_{0}\;f(h)
+    P_{r} = P_{0}\;f(h)
     \label{eq:5}
 \end{equation}
 
@@ -156,7 +156,7 @@ $P_{0}$ is the `optimal' regolith production rate (m/yr), which is defined to be
 Our implementation of the erosion rate follows one of the approaches taken in \citet{Godderis2017c} and \citet{Maffre2018a}, where it is parameterized based on runoff and slope ($s$; m/m):
 
 \begin{equation}
-    E = k_{e}\;q^{m}\;s^{n}
+    E_{p} = k_{e}\;q^{m}\;s^{n}
     \label{eq:8}
 \end{equation}
 
@@ -178,9 +178,9 @@ In this study, we are interested in obtaining the steady-state solution rather t
 \begin{equation}\label{eq:dynsoil_ss}
 \left\{\ 
 \begin{aligned}
-& h   \ =\    \max\left(  \;  0  \;,\;  d_o \log\left(\frac{P_o}{E}\right)  \right)                                                 \\
-& x(z)      \ =\   \exp\left(   - \frac{K}{\sigma+1}  \left(\frac{z}{E}\right)^{\sigma+1}   \right)   \\
-& W        \ =\   (1-x(h)) \, E  \ =\   (1-x_s) \, E                                                                         \\
+& h   \ =\    \max\left(  \;  0  \;,\;  d_{0} \log\left(\frac{P_{0}}{E_{p}}\right)  \right)                                                 \\
+& x(z)      \ =\   \exp\left(   - \frac{K}{\sigma+1}  \left(\frac{z}{E_{p}}\right)^{\sigma+1}   \right)   \\
+& W        \ =\   (1-x(h)) \, E_{p}  \ =\   (1-x_s) \, E_{p}                                                                         \\
 \end{aligned}
 \right.
 \end{equation}
@@ -238,7 +238,9 @@ The spatial distribution of lithologies is sourced from the global lithologic ma
 
 Experimental determinations of the activation energy ($E_a$; Equations \ref{eq:8} and \ref{eq:9}) associated with the weathering of silicate minerals are variable \citep{Brantley2003a}. However, multiple efforts to invert for $E_a$ in basaltic watersheds with varying temperature have yielded values (41.6 $\pm$ 3.2~kJ/mol in \citealp{Li2016a}; 42.3~kJ/mol in \citealp{Dessert2001a}) that are consistent with the lower end of activation energies of Ca+Mg bearing minerals in laboratory experiments such as that for diopside (40.5 $\pm$ 1.7~kJ/mol; \citealp{Knauss1993a}) and for labradorite (42.1~kJ/mol; \citealp{Carroll2005a}. We use the value of 42~kJ/mol in our model runs.
 
-However, as discussed in the main text, $k_{d}$ (Equation \ref{eq:9}), $k_{w}$ (Equation \ref{eq:9}), $\sigma$ (Equation \ref{eq:4}), and $k_{rp}$ (Equation \ref{eq:8}) are poorly constrained. Furthermore, the Ca+Mg concentrations of metamorphic and siliciclastic sediment grid cells are also difficult to define. We therefore allow these parameters to vary within reasonable bounds during the calibration stage of GEOCLIM (Table \ref{tab:parameter_combinations}).
+Of the various parameters used in the equations that govern the silicate weathering component of GEOCLIM (see SI), the values of four parameters within the chemical weathering parameterization of \cite{West2012a} are poorly constrained: the proportionality constant that modifies the dependence of dissolution rate on runoff and temperature ($k_{d}$), the proportionality constant that modifies the dependence of dissolution rate on runoff only ($k_{w}$), the power constant that modifies the dependence of dissolution rate on the time that a rock particle has spent in the regolith ($\sigma$), and the proportionality constant that modifies the dependence of regolith production on runoff and temperature ($k_{rp}$)
+
+However, the values of four parameters within the chemical weathering parameterization of \cite{West2012a} are poorly constrained: the proportionality constant that modifies the dependence of dissolution rate on runoff and temperature ($k_{d}$; Equation \ref{eq:9}), the proportionality constant that modifies the dependence of dissolution rate on runoff only ($k_{w}$; Equation \ref{eq:9}), the power constant that modifies the dependence of dissolution rate on the time that a rock particle has spent in the regolith ($\sigma$; Equation \ref{eq:4}), and the proportionality constant that modifies the dependence of regolith production on runoff and temperature ($k_{rp}$; Equation \ref{eq:8}). Furthermore, the Ca+Mg concentrations of metamorphic and siliciclastic sediment grid cells are also difficult to define. We therefore allow these parameters to vary within reasonable bounds during the calibration stage of GEOCLIM (Table \ref{tab:parameter_combinations}).
 
 \begin{table}[h!]
 \begin{center}
@@ -370,7 +372,7 @@ As with any modeling study, there are limitations with the approach. We consider
 
 Another limitation associated with using a modern-day climate model, is that in the scenarios with varying shorelines, we hold the slope and lithology to be the same as the present-day in each pixel. This means that while we are changing the amount of emergent land, we are not changing the latitudinal or longitudinal position. Given that similar distributions of lithology and slope are reasonable in the past and that latitudinal translation has been relatively minor, we consider this simplification to be reasonable to first-order. However, implementing high-resolution climate models with both varying shorelines and change in paleogeographic position for these scenarios is valuable future direction. Additionally, such modeling efforts could give insight into whether associated changes in ocean and atmosphere circulation would have significantly modulated precipitation in I\&NG.  
 
-Finally, although the silicate weathering component of GEOCLIM now implements lithology-dependent Ca+Mg concentration, our implementation does not include lithology-dependent kinetics of mineral dissolution. Relative to felsic lithologies, mafic lithologies contain minerals with faster dissolution kinetics (e.g. olivine and plagioclase; see SI), and thus incorporating lithology-dependent kinetics of mineral dissolution into our simulations would likely increase the sensitivity of steady-state \pCOtwo to increases in subaerially-exposed land area and tectonic topography of I\&NG.
+Finally, although the silicate weathering component of GEOCLIM now implements lithology-dependent Ca+Mg concentration, our implementation does not include lithology-dependent kinetics of mineral dissolution. Relative to felsic lithologies, mafic lithologies contain minerals with faster dissolution kinetics (e.g. olivine and plagioclase), and thus incorporating lithology-dependent kinetics of mineral dissolution into our simulations would likely increase the sensitivity of steady-state \pCOtwo to increases in subaerially-exposed land area and tectonic topography of I\&NG. We also do not include the effects of reverse weathering \citep{Michalopoulos1995a}, which could modulate the relationship between liberation of Ca and Mg during silicate weathering and long-term \COtwo consumption.
 
 \clearpage
 
