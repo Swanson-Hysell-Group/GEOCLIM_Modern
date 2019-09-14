@@ -1,3 +1,8 @@
+% modifications by Yuem Park
+
+% 2019 September 14 : remove month
+% 2019 September 14 : remove bolding of volume
+
 % version = 1.09 of nature.bst 1999 July 26
 
 % 1991 July 3  last name first 
@@ -306,10 +311,8 @@ FUNCTION {format.date}
       if$
     }
     { month empty$
-%        'year                       % TDS
-%        { month " " * year * }      % TDS
          { " (" year * ")" * }
-         { ", " month * " " * " (" year * ")" * * }
+         { " (" year * ")" * * }
 % 1999 July 26: added comma in front of month
       if$
     }
@@ -420,8 +423,8 @@ FUNCTION {format.pages}
 }
 
 FUNCTION {format.vol.num.pages}
-%{ volume field.or.null TDS
-{ "{ \bf " volume "}" * * field.or.null  % make volume bold face
+%{ "{ \bf " volume "}" * * field.or.null  % make volume bold face
+{ "{ " volume "}" * * field.or.null  % remove volume bold face
   number empty$
     'skip$
     { "(" number * ")" * *
@@ -435,7 +438,6 @@ FUNCTION {format.vol.num.pages}
     'skip$
     { duplicate$ empty$
         { pop$ format.pages }
-%        { ":" * pages n.dashify * } % TDS
         { ", " * pages n.dashify * } % comma, not colon TDS
       if$
     }
