@@ -236,6 +236,27 @@ The spatial distribution of lithologies is sourced from the global lithologic ma
 
 \section*{GEOCLIM Calibration}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{Manuscript/Figures/W_vs_r2.jpg}
+    \caption{\textbf{A)} Modeled global \COtwo consumption vs. the coefficient of determination ($r^{2}$) between modeled and data-constrained \COtwo consumption in each of the watersheds. Each point represents model output using one of the 78,000 parameter combinations. \textbf{B)} Same as A, but zoomed to the plotting space with positive $r^{2}$'s. The black line represents the full range of estimates of the present-day global CO$_{2}$ emission rate compiled in \citet{Gerlach2011a}. The black box represents the preferred range of those estimates.}
+    \label{fig:W_vs_r2}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{Manuscript/Figures/r2_cross_plot.pdf}
+    \caption{Modeled vs. data-constrained \COtwo consumption in watersheds around the world. \textbf{A)} Each point represents a single watershed, and the y-value of the point shows the mean value of the 3,339 parameter combinations that produce individual watershed \COtwo consumption fluxes that approximate those estimated in the literature for the present-day. Whiskers extend to the minimum and maximum modeled watershed \COtwo consumption fluxes for the 3,339 parameters combinations. The red dashed line is the 1:1 line, the blue dashed line is the 2:1 line, and the cyan dashed lines are the 5:1 and 10:1 lines. \textbf{B)} Same as A, but only showing the parameter combination that produced that highest $r^{2}$. The chemical weathering and regolith thickness maps of this parameter combination are shown in Figure \ref{fig:weathering_regolith_maps}.}
+    \label{fig:r2_cross_plot}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{Manuscript/Figures/weathering_regolith_maps.jpg}
+    \caption{Chemical weathering and regolith thickness maps for the parameter combination that produced that highest $r^{2}$ (Fig. \ref{fig:r2_cross_plot}B). Parameter values used for this combination are: $k_{d}=5\times10^{-4}$, $k_{w}=1$, $\sigma=-0.4$, $k_{rp}=1\times10^{-2}$, metamorphic$_{Ca+Mg}=2500$~mol/m$^{3}$, sediment$_{Ca+Mg}=2000$~mol/m$^{3}$.}
+    \label{fig:weathering_regolith_maps}
+\end{figure}
+
 Experimental determinations of the activation energy ($E_a$; Equations \ref{eq:8} and \ref{eq:9}) associated with the weathering of silicate minerals are variable \citep{Brantley2003a}. However, multiple efforts to invert for $E_a$ in basaltic watersheds with varying temperature have yielded values (41.6 $\pm$ 3.2~kJ/mol in \citealp{Li2016a}; 42.3~kJ/mol in \citealp{Dessert2001a}) that are consistent with the lower end of activation energies of Ca+Mg bearing minerals in laboratory experiments such as that for diopside (40.5 $\pm$ 1.7~kJ/mol; \citealp{Knauss1993a}) and for labradorite (42.1~kJ/mol; \citealp{Carroll2005a}). We use the value of 42~kJ/mol in our model runs.
 
 Within the equations that govern the silicate weathering component of GEOCLIM, we identify the less constrained parameters: the proportionality constant that modifies the dependence of dissolution rate on runoff and temperature ($k_{d}$; Equation \ref{eq:9}), the proportionality constant that modifies the dependence of dissolution rate on runoff only ($k_{w}$; Equation \ref{eq:9}), the power constant that modifies the dependence of dissolution rate on the time that a rock particle has spent in the regolith ($\sigma$; Equation \ref{eq:4}), and the proportionality constant that modifies the dependence of regolith production on runoff and temperature ($k_{rp}$; Equation \ref{eq:8}). Furthermore, the Ca+Mg concentrations of metamorphic and siliciclastic sediment grid cells are also difficult to define. We therefore allow these parameters to vary within reasonable bounds during the calibration stage of GEOCLIM and test 78,000 unique parameter combinations (Table \ref{tab:parameter_combinations}).
@@ -277,20 +298,6 @@ We then compute spatially-resolved long-term \COtwo consumption (i.e. Ca+Mg flux
 \noindent
 $M_{i}$ is the modeled \COtwo consumption over watershed $i$, $O_{i}$ is the observed \COtwo consumption over watershed $i$, and $\overline{\log_{10}(O)}$ is the mean of the log of observed \COtwo consumption over all watersheds.
 
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=1\textwidth]{Manuscript/Figures/W_vs_r2.jpg}
-    \caption{\textbf{A)} Modeled global \COtwo consumption vs. the coefficient of determination ($r^{2}$) between modeled and data-constrained \COtwo consumption in each of the watersheds. Each point represents model output using one of the 78,000 parameter combinations. \textbf{B)} Same as A, but zoomed to the plotting space with positive $r^{2}$'s. The black line represents the full range of estimates of the present-day global CO$_{2}$ emission rate compiled in \citet{Gerlach2011a}. The black box represents the preferred range of those estimates.}
-    \label{fig:W_vs_r2}
-\end{figure}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=1\textwidth]{Manuscript/Figures/r2_cross_plot.pdf}
-    \caption{Modeled vs. data-constrained \COtwo consumption in watersheds around the world. \textbf{A)} Each point represents a single watershed, and the y-value of the point shows the mean value of the 3,339 parameter combinations that produce individual watershed \COtwo consumption fluxes that approximate those estimated in the literature for the present-day. Whiskers extend to the minimum and maximum modeled watershed \COtwo consumption fluxes for the 3,339 parameters combinations. The red dashed line is the 1:1 line, the blue dashed line is the 2:1 line, and the cyan dashed lines are the 5:1 and 10:1 lines. \textbf{B)} Same as A, but only showing the parameter combination that produced that highest $r^{2}$.}
-    \label{fig:r2_cross_plot}
-\end{figure}
-
 The majority of the original 78,000 parameter combinations produce \COtwo consumption maps with poor fits to the measured watershed data (Fig. \ref{fig:W_vs_r2}). Given that the coefficient of determination ($r^{2}$) is calculated using equation \ref{eq:10} rather than fitting a linear model, many of the combinations associated with particularly poor fits result in negative $r^{2}$ values (Fig. \ref{fig:W_vs_r2}). However, given the right permutation of parameters, GEOCLIM produces \COtwo consumption maps that fit the measured watershed data reasonably well. We therefore eliminate all parameter combinations that produce a $r^{2}<0.4$, which leaves 3,339 unique parameter combinations (Figs. \ref{fig:W_vs_r2} and \ref{fig:r2_cross_plot}).
 
 Global CO$_{2}$ consumption calculated from these 3,339 parameter combinations ranges from 2.7$\times10^{12}$~mol/yr to 7.1$\times10^{12}$~mol/yr, with a mean of 5.4$\times10^{12}$~mol/yr. These estimates fall within the range of those independently estimated in the literature for the present-day: the full range of estimates of the present-day global CO$_{2}$ emission rate compiled in \citet{Gerlach2011a} is 3.0--10.0$\times10^{12}$~mol/yr, with the preferred range of those estimates being 3.4--5.9$\times10^{12}$~mol/yr (Fig. \ref{fig:W_vs_r2}B).
@@ -319,7 +326,16 @@ We use geological data to quantify the changes in the area of I\&NG over the pas
 
 To explore the sensitivity of our results to the inclusion of the Sunda Shelf, we also tested ``reduced I\&NG'' scenarios for 15, 10, and 5~Ma, which are identical to that of the ``reduced I\&NG + Sunda Shelf'' scenarios without the addition of the Sunda Shelf. We find that the estimated steady state \pCOtwo's for the ``reduced I\&NG'' scenarios are only marginally higher than those of the ``reduced I\&NG + Sunda Shelf'' scenarios (Fig. \ref{fig:scenario_pCO2_all}), suggesting that our results are largely insensitive to the inclusion of the Sunda Shelf. This insensitivity can be attributed to the low Ca+Mg concentrations of felsic and sediment lithologies in conjunction with the low slope values distributed across the shelf.
 
-The decrease in \pCOtwo that we estimate associated with the emergence of I\&NG since 5~Ma ($\sim$120~ppm) is greater than that proposed in \citet{Molnar2015a} ($\sim$19~ppm). This 19~ppm value in \citet{Molnar2015a} is obtained from an equation that assumes a direct linear relationship between mean global temperature and changes in weathering-rate-weighted land area, scaled by a factor $\alpha$ that is intended to account for the influence of both runoff and temperature (Equation 3 in \citealp{Molnar2015a}). \pCOtwo is then estimated from $T$ using a simple energy balance equation. However, as discussed in the main text, as \COtwo sinks are removed and \pCOtwo rises, temperature increases and the hydrological cycle is invigorated, causing other weathering sinks to increase until a new steady-state is achieved at higher \pCOtwo. The linear relationship described in Equation \ref{eq:Molnar3} ignores these feedbacks in the global climate system.
+The decrease in \pCOtwo that we estimate associated with the emergence of I\&NG since 5~Ma ($\sim$120~ppm) is greater than that proposed in \citet{Molnar2015a} ($\sim$19~ppm). This 19~ppm value in \citet{Molnar2015a} is obtained from an equation that assumes a direct linear relationship between mean global temperature and changes in weathering-rate-weighted land area, scaled by a factor $\alpha$ that is intended to account for the influence of both runoff and temperature (Equation 3 in \citealp{Molnar2015a}). \pCOtwo is then estimated from $T$ using a simple energy balance equation. However, as discussed in the main text, as \COtwo sinks are removed and \pCOtwo rises, temperature increases and the hydrological cycle is invigorated, causing other weathering sinks to increase until a new steady-state is achieved at higher \pCOtwo. The linear relationship used in \citet{Molnar2015a} ignores these feedbacks in the global climate system.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{Manuscript/Figures/pCO2_proxies.pdf}
+    \caption{Proxy-based \pCOtwo estimates for the past 20~m.y. For the \citet{Foster2017a} data, error bars indicate standardized uncertainties. For the \citet{Ji2018a} data, error bars represent the 16-84$^{th}$ percentile of resampled estimates. The \citet{Bereiter2015a} data comes from the EPICA Dome C ice core.}
+    \label{fig:pCO2_proxies}
+\end{figure}
+
+Proxy-based \pCOtwo estimates for the past 20~m.y. are shown in Figure \ref{fig:pCO2_proxies} \citep{Bereiter2015a, Foster2017a, Ji2018a}. Even when stringent quality criteria and the latest understanding of each of the \pCOtwo proxies have been applied to available \pCOtwo records, both significant uncertainty in the estimated \pCOtwo for any given data point as well as disagreement between techniques remain. Nevertheless, our modeled \pCOtwo values for 15~Ma (Fig. \ref{fig:scenario_pCO2_all}) resemble the higher end of proxy-based \pCOtwo estimates for the early-mid-Miocene.
 
 \section*{Limitations and Future Directions}
 
