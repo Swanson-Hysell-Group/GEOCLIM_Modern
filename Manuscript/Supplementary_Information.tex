@@ -52,6 +52,7 @@
 \newcommand{\dC}{$\delta^{13}$C\xspace}
 \newcommand{\dO}{$\delta^{18}$O\xspace}
 \newcommand{\SrSr}{$^{87}$Sr/$^{86}$Sr\xspace}
+\newcommand{\OsOs}{$^{187}$Os/$^{188}$Os\xspace}
 \newcommand{\permil}{\textperthousand\xspace}
 \newcommand{\UPb}{$^{206}$Pb/$^{238}$U\xspace}
 \newcommand{\pCOtwo}{\textit{p}CO$_{2}$\xspace}
@@ -143,7 +144,7 @@ These supplementary information materials provide details on the model framework
 
 We restricted the calculation of the weathering fluxes to the flux of dissolved Ca+Mg originating from continental silicate weathering, as they are essential for the long-term consumption of atmospheric \COtwo through silicate weathering. To calculate this flux, we need to assign the concentration of Ca and Mg ($\chi_{CaMg}$) within the unweathered bedrock (Fig. 1 in the main text). Previous implementations of GEOCLIM have used a ``diffuse lithology'' where all exposed land is assigned the composition of bulk upper continental crust. These previous studies assumed that the weathering rates of all rocks was the same for each continental grid element, provided that the grid element was submitted to the same climatic conditions. Given that the hypothesis we seek to test involves the varying concentration of cations in different lithologies, we instead implement a more realistic lithologically-resolved version of the model.
 
-The spatial distribution of lithologies is sourced from the Global Lithologic Map (GLiM) of \citet{Hartmann2012a}. The raw data takes the form of polygon vectors, where each polygon is assigned one of 16 lithologic categories. We first group these 16 categories into 6 broader categories (metamorphic, felsic, intermediate, mafic, carbonate, and siliciclastic sediment; Table \ref{tab:GLiM_to_GEOCLIM}). We then rasterize the polygon vectors to 0.1\degrees $\times$ 0.1\degrees resolution, where each pixel is assigned the lithologic category of the polygon that covers the greatest area in that pixel (i.e. the `mode lithology'; Fig. \ref{fig:world_lithology}). To improve the computing time of GEOCLIM, we decrease the resolution of the raster to 0.5\degrees $\times$ 0.5\degrees. To do so, a 3-dimensional 720 $\times$ 360 $\times$ 7 matrix is created, in which the fraction of each 0.5\degrees $\times$ 0.5\degrees pixel covered by each of the 6 lithologic categories (or water/ice) is captured by the extra dimension. In this way, we calculate an area-weighted mean Mg+Ca concentration of the surface in each 0.5\degrees $\times$ 0.5\degrees pixel.
+The spatial distribution of lithologies is sourced from the Global Lithologic Map (GLiM) of \citet{Hartmann2012a}. The raw data takes the form of polygon vectors, where each polygon is assigned one of 16 lithologic categories. We first group these 16 categories into 6 broader categories (metamorphic, felsic, intermediate, mafic, carbonate, and siliciclastic sediment; Table \ref{tab:GLiM_to_GEOCLIM}). We then rasterize the polygon vectors to 0.1\degrees $\times$ 0.1\degrees resolution, where each pixel is assigned the lithologic category of the polygon that covers the greatest area in that pixel (i.e. the `mode lithology'; Fig. \ref{fig:world_lithology}). To improve the computing time of GEOCLIM, we decrease the resolution of the raster to 0.5\degrees $\times$ 0.5\degrees. To do so, a 3-dimensional 720 $\times$ 360 $\times$ 7 matrix is created, in which the fraction of each 0.5\degrees $\times$ 0.5\degrees pixel covered by each of the 6 lithologic categories (or water/ice) is captured by the extra dimension. In this way, we calculate an area-weighted mean Ca+Mg concentration of the surface in each 0.5\degrees $\times$ 0.5\degrees pixel.
 
 The Ca+Mg concentrations of felsic (1,521~mol/m$^{3}$), intermediate (4,759~mol/m$^{3}$), and mafic (10,317~mol/m$^{3}$) lithologies are assigned based on the mean of data compiled from EarthChem (\url{www.earthchem.org/portal}; calculations made in the code within the repository). For metamorphic and siliciclastic lithologies, we explore a range of feasible Ca+Mg concentrations during calibration of the silicate weathering component of GEOCLIM (\textit{GEOCLIM Calibration}).
 
@@ -205,10 +206,10 @@ Within the equations that govern the chemical weathering rate in GEOCLIM, we ide
 
 We compute spatially-resolved long-term \COtwo consumption (i.e. Ca+Mg fluxes) using present-day runoff (UNH/GRDC Composite Runoff Fields V1.0; \citealp{Fekete1999a}), temperature (CRU TS v.4.03; \citealp{Harris2013a}), and slope (Shuttle Radar Topography Mission; \citealp{Farr2007a}) fields. As described in the main text, we then sum the computed \COtwo consumption over large-scale watersheds that appear in the global compilation of \citet{Gaillardet1999a}, as well as smaller-scale watersheds of the Amazon Basin (HYBAM network) in the compilation of \citet{Moquet2011a}, \citet{Moquet2016a}, and \citet{Moquet2018a}. The latter are nested watersheds, which requires upstream weathering fluxes to be subtracted from downstream fluxes. Watersheds for which this subtraction yields an aberrant value are not considered. 80 watersheds in total are used in this study. We calculate the coefficient of determination ($r^{2}$) between computed and measured \COtwo consumption in each of these basins:
 
-\begin{equation}
+\begin{equation*}
     r^{2} = 1 - \frac{\sum\left[ \log_{10}(M_{i}) - \log_{10}(O_{i}) \right]^{2}}{\sum\left[ \log_{10}(O_{i}) - \overline{\log_{10}(O)} \right]^{2}}
     \label{eq:10}
-\end{equation}
+\end{equation*}
 
 \noindent
 $M_{i}$ is the modeled \COtwo consumption over watershed $i$, $O_{i}$ is the observed \COtwo consumption over watershed $i$, and $\overline{\log_{10}(O)}$ is the mean of the log of observed \COtwo consumption over all watersheds.
@@ -319,6 +320,60 @@ Our reconstructions of the paleoshorelines of the Phillipines were primarily inf
 Paleoshoreline reconstructions of the Sunda-Banda Arc system relied largely on the work of \citet{Hall2013a}. The Sunda-Banda Arc system is composed of thick sequences of mixed sedimentary rocks and basement intruded and overlain by igneous rocks derived from continual arc magmatism through much of the Cenozoic \citep{Hall2017a}. Sumatra is the largest island within the Sunda-Banda Arc system that stretches from the Andaman Sea in the northwest to the Banda Sea in the east. The western portion of the Sumatra is underlain by the Wolya ophiolite, which was obducted in the Cretaceous and exhumed in the Eocene to Oligocene \citep{Allen2008a}, whereas the southeast corner on the islands of Bangka and Belitung is composed of granite basement of the Sunda Shelf \citep{Hall2009a, Hall2013b}. Java is composed of a complex of E-W-striking deformational and magmatic belts \citep{AudleyCharles2004a}. The belts have a volcanic arc in the south and a continental shelf to the north with an adjacent sedimentary basin \citep{AudleyCharles2004a}. Bali and Flores are mostly volcanic with some sedimentary cover \citep{Hall2009a}.
 
 Exhumation of the modern Sunda-Banda Arc is the result of ongoing arc-continent collision with the subducting Australian Plate \citep{Harris2006a}. From ca. 20--10~Ma, the majority of Sumatra and nearly all of Java were submerged, although Bangka and Belitung were exposed in addition to a portion of the greater Sunda Shelf \citep{Hall2009a, Hall2013b}. Six major islands were subaerially exposed before 5~Ma: Sumatra, Belitung, Bangka, Java, Bali, and Flores. However, most of Sumatra and Java were elevated above sea level and emerged to their present exposures only since 5~Ma \citep{Hall2009a, Hall2013b}. Most of the non-volcanic islands of the Outer Banda Arc emerged after 5~Ma, associated with slab roll-back and collision with the Australian continental margin \citep{AudleyCharles2004a, Harris2006a, Hall2013b}. In Timor and Sumba, arc-continent collision resulted in rapid uplift of deep marine sedimentary rocks to elevations $>$1~km above sea level with estimated average uplift rates of 1.5~km/m.y. \citep{AudleyCharles1986a}.
+
+\section*{Seawater Model}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/seawater_model.pdf}
+    \caption{xxx}
+    \label{fig:seawater_model}
+\end{figure}
+
+\begin{table}[h!]
+\caption{Geochemical properties of sources used in the seawater model presented in Figure \ref{fig:seawater_model}.} 
+\begin{center}
+    \begin{tabular}{lcccc}
+    \hline
+     & & \textbf{Mg} & \textbf{Ca} & \textbf{Sr} \\
+    \textbf{source} & \textbf{\SrSr} & (ppm) & (ppm) & (ppm) \\
+    \hline
+    non-Himalayan radiogenic subaerial weathering & calculated$^{1}$ & 12800$^{2}$ & 23750$^{2}$ & 310$^{2}$ \\
+    Himalayan radiogenic subaerial weathering & varied$^{3}$ & 12800$^{2}$ & 23750$^{2}$ & 310$^{2}$ \\
+    non-Himalayan juvenile subaerial weathering & 0.7035$^{4}$ & 45500$^{5}$ & 71600$^{5}$ & 465$^{5}$ \\
+    non-Himalayan carbonate subaerial weathering & 0.7080$^{4}$ & n/a$^{6}$ & n/a$^{6}$ & n/a$^{6}$ \\
+    Himalayan carbonate subaerial weathering & varied$^{3}$ & n/a$^{6}$ & n/a$^{6}$ & n/a$^{6}$ \\
+    hydrothermal exchange & 0.7030$^{4}$ & n/a$^{6}$ & n/a$^{6}$ & n/a$^{6}$ \\
+    \hline
+    \end{tabular}
+    
+    \scriptsize
+	\flushleft \emph{Notes:} \\
+    $^{1}$ Calculated to account for $^{87}$Rb decay following the equations of \citet{Papanastassiou1968a}.\\
+    $^{2}$ From \citet{Wedepohl1995a}\\
+    $^{3}$ Varied as shown in Figure \ref{fig:seawater_model}.\\
+    $^{4}$ From \citet{Allegre2010a}.\\
+    $^{5}$ Taking the mean of \citet{Turekian1961a} and \citet{Taylor1964a}.\\
+    $^{6}$ Not required for our model, since the Sr fluxes from these sources are set directly in our model and they do not contribute to \COtwo sequestration.\\
+\label{tab:seawater_model}
+\end{center}
+\end{table}
+
+If the weathering of juvenile lithologies of the SEAI played an important role in driving Neogene cooling, the intuitive expectation is that marine \SrSr should have decreased over the Neogene as the global weathering flux of low \SrSr juvenile lithologies increased (compensated by a decrease in the global weathering flux of high \SrSr radiogenic lithologies to maintain constant global \COtwo consumption). Contrary to this expectation, marine \SrSr has been rising since ca. 35~Ma (Fig. \ref{fig:seawater_model}). However, the global weathering flux of isotopically-representative lithologies can be decoupled from marine \SrSr via the regional weathering of isotopically-unique source rocks. For example, the decrease in slope in the marine \SrSr record ca. 15~Ma has been attributed to exhumation of relatively low \SrSr and high \OsOs Lesser Himalayan lithologies \citep{Myrow2015a, Colleps2018a}. This change in slope could also be at least partially driven by the exhumation of mafic and organic-rich forearc sediments in the SEAI during arc-continent collision.
+
+To test whether the Neogene marine \SrSr record is compatible with an increase in the global weathering flux of low \SrSr juvenile lithologies over the Neogene, we implement a simple seawater model that simulates changes in marine \SrSr that result from changing fluxes from several sources \citep{Brass1975a}:
+
+\begin{equation*}
+    \frac{dR_{SW}}{dt} = \frac{1}{\tau} \sum_{i} \frac{F_{i}}{F_{tot}}(R_{i} - R_{SW})
+\end{equation*}
+
+$R_{SW}$ is the \SrSr composition of the ocean, $t$ is time in the model, $\tau$ is the residence time of strontium in the oceans, $F_{i}$ is the flux of strontium from source $i$, $F_{tot}$ is the total flux of strontium from all sources, and $R_{i}$ is the \SrSr composition of source $i$. We define 6 simplified sources of strontium to the oceans (Table \ref{tab:seawater_model}): the non-Himalayan subaerial weathering of radiogenic (older cratonic rocks such as gneiss and granite), juvenile (such as basalt), and carbonate lithologies, the Himalayan subaerial weathering of radiogenic and carbonate lithologies, and the weathering of ocean crust during hydrothermal circulation on or near mid-ocean ridges.
+
+At initialization, we set the Sr flux from each of these sources such that at 50~Ma marine \SrSr is $\sim$0.7078 (Fig. \ref{fig:seawater_model}). As a percentage of the total Sr input into the ocean, this model yields hydrothermal = 10\%, carbonate = 35\%, radiogenic lithologies = 13\%, and juvenile lithologies = 42\%. These ini- tial steady-state Sr fluxes are similar to those estimated for the present-day (hydrothermal = 10\%, carbonate = 35\%, radiogenic lithologies = 25\%, and juvenile lithologies = 30\%, from \citealt{Allegre2010a}). The residence time of strontium in the oceans is poorly constrained, primarily due to the lack of constraints on the input flux of strontium from hydrothermal systems. Recent estimates for this residence time range from $\sim$1.7--3.7~m.y. \citep{Krabbenhoft2010a}, so we use a value that falls within this range (2.4~m.y.; \citealp{Ravizza2003a}).
+
+The \SrSr of Himalayan lithologies is highly variable, with values ranging from $\sim$0.71--1.11 \citep{Oliver2003a}, and as orogenesis proceeded, the \SrSr of waters draining the Himalayas has changed as different tectonic units are exhumed, as evidenced by the \SrSr of pedogenic clays in the Bengal Fan and soil carbonate in Nepal (Fig. \ref{fig:seawater_model}; \citealp{Derry1996a, Quade1997a}). In our model, we make the assumption that the \SrSr of waters draining the Himalayas has been constant at 0.720 prior to 16~Ma, when the Outer Lesser Himalaya began to be exhumed \citep{Myrow2015a, Colleps2018a}. We also assume that the ratio of Sr coming from carbonates vs. radiogenic lithologies has remained constant throughout the past 50 m.y. (i.e. 70\% from carbonates and 30\% from radiogenic lithologies; \citealp{Oliver2003a}). Finally, we assume that the average \SrSr composition of Himalayan carbonates and radiogenic lithologies that are being weathered at any given time is identical. Although this final assumption is likely incorrect in detail, it has been shown that Sr in carbonates from the Lesser and Higher Himalaya have equilibrated with Sr in coexisting silicates \citep{Oliver2003a}, which at least partially justifies our simplifying assumption.
+
+We maintain initial conditions until 35~Ma, at which point we begin to change both global and Himalayan subaerial weathering fluxes (Fig. \ref{fig:seawater_model}). The two primary watersheds draining the Himalayas are the Indus and Ganges-Brahmaputra basins. Together, the Sr flux from these two watersheds in the present day is $\sim$9.5$\times$10$^{8}$~mol/yr. We therefore linearly increase the total Sr flux coming from the Himalayas to 1$\times$10$^{9}$~mol/yr from 35~Ma to present. We also linearly increase the Sr flux coming from non-Himalayan radiogenic lithologies 35--16~Ma. Importantly, we also linearly decrease the Sr flux coming from non-Himalayan juvenile lithologies over this same time period in order to maintain constant \COtwo consumption (i.e. constant global Ca+Mg flux from subaerial weathering). In order to match the observed increase in marine \SrSr ca. 35--16~Ma, the Sr flux coming from non-Himalayan juvenile lithologies needs to be increased to a value 1.42$\times$ the initial value.
 
 \clearpage
 
