@@ -2,7 +2,7 @@
 
 Repository for the code and manuscript associated with:
 
-Park, Y., Maffre, P., Goddéris, Y., Macdonald, F. A., Anttila, E. S. C., and Swanson-Hysell, N. L., in preparation, Emergence of the Southeast Asian islands as a driver for Neogene cooling.
+Park, Y., Maffre, P., Goddéris, Y., Macdonald, F. A., Anttila, E. S. C., and Swanson-Hysell, N. L., submitted, Emergence of the Southeast Asian islands as a driver for Neogene cooling.
 
 All analyses associated with this study are distributed amongst several Jupyter notebooks in `Code/Notebooks/`. However, the most important code associated with analyzing the GEOCLIM output can be found in `Code/Notebooks/parameter_exploration.ipynb` and `Code/Notebooks/scenario_analysis.ipynb`.
 
